@@ -35,10 +35,10 @@ public partial class ScanResPage : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is DisplayResult selectedResult)
         {
-            Clipboard.SetTextAsync(selectedResult.FullText);
-            //DisplayAlert("Copied", "Text copied to clipboard.", "OK");
+            await Clipboard.SetTextAsync(selectedResult.FullText);
+            await DisplayAlert("Copied", "Text copied to clipboard.", "OK");
 
-            await Task.Delay(100);
+            await Task.Delay(300);
             ((CollectionView)sender).SelectedItem = null;
         }
     }
