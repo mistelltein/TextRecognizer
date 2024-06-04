@@ -59,10 +59,17 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\mainicon.jpg" />
+	  <None Remove="Resources\Images\background.jpg" />
+	  <None Remove="Resources\Images\background2.jpg" />
+	  <None Remove="Resources\Images\camera.png" />
+	  <None Remove="Resources\Images\camera_2.png" />
+	  <None Remove="Resources\Images\gallery.png" />
+	  <None Remove="Resources\Images\gallery_2.png" />
 	  <None Remove="Resources\Images\home_icon.png" />
 	  <None Remove="Resources\Images\mainimage.jpg" />
 	  <None Remove="Resources\Images\mainimage2.jpg" />
 	  <None Remove="Resources\Images\mainimage3.jpg" />
+	  <None Remove="Resources\Images\paste.png" />
 	  <None Remove="Resources\Images\result_icon.png" />
 	  <None Remove="Resources\Images\save_img.png" />
 	  <None Remove="Resources\Images\scan_img.png" />
