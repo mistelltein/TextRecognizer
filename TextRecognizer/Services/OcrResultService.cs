@@ -6,6 +6,7 @@ public interface IOcrResultService
 {
     Task SaveResultAsync(string text);
     Task<IReadOnlyList<string>> GetResultsAsync();
+    Task ClearResultsAsync();
 }
 
 public class OcrResultService : IOcrResultService
@@ -23,6 +24,12 @@ public class OcrResultService : IOcrResultService
     public async Task SaveResultAsync(string text)
     {
         _results.Insert(0, text);
+        await SaveResultsToFile();
+    }
+
+    public async Task ClearResultsAsync()
+    {
+        _results.Clear();
         await SaveResultsToFile();
     }
 

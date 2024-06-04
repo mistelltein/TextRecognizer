@@ -15,7 +15,11 @@ public partial class ScanResPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        await LoadResultsAsync();
+    }
 
+    private async Task LoadResultsAsync()
+    {
         var results = await _ocrResultService.GetResultsAsync();
         var displayResults = results.Select(text => new DisplayResult { FullText = text, DisplayText = GetDisplayText(text) }).ToList();
         ResultsCollectionView.ItemsSource = displayResults;
@@ -27,13 +31,22 @@ public partial class ScanResPage : ContentPage
         return text.Length <= maxLength ? text : text.Substring(0, maxLength) + "...";
     }
 
-    private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.FirstOrDefault() is DisplayResult selectedResult)
         {
             Clipboard.SetTextAsync(selectedResult.FullText);
             //DisplayAlert("Copied", "Text copied to clipboard.", "OK");
+
+            await Task.Delay(100);
+            ((CollectionView)sender).SelectedItem = null;
         }
+    }
+
+    private async void ClearResults_Clicked(object sender, EventArgs e)
+    {
+        await _ocrResultService.ClearResultsAsync();
+        await LoadResultsAsync();
     }
 
     public class DisplayResult

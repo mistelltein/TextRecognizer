@@ -5,18 +5,33 @@
              BackgroundColor="#1e1e1e"
              BackgroundImageSource="background2.jpg">
 
-    <StackLayout Padding="10" Spacing="10">
-        <Label Text="Saved OCR Results" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+    <Grid RowDefinitions="Auto,*,Auto">
 
-        <CollectionView x:Name="ResultsCollectionView" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="10" Margin="5" BackgroundColor="#424242" CornerRadius="10" WidthRequest="350" HeightRequest="100">
-                        <Label Text="{Binding DisplayText}" TextColor="White" FontSize="14" LineBreakMode="TailTruncation" MaxLines="3"/>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
+        <VerticalStackLayout Grid.Row="0" Padding="30,0" Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+            <Label Text="Saved OCR Results" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Margin="0,30,0,10" />
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1" Padding="30,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <VerticalStackLayout Spacing="20" HorizontalOptions="Center" VerticalOptions="StartAndExpand">
+                <CollectionView x:Name="ResultsCollectionView" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="10" Margin="5" BackgroundColor="#1a237e" CornerRadius="20" WidthRequest="325" HeightRequest="100" HorizontalOptions="Center">
+                                <Label Text="{Binding DisplayText}" TextColor="White" FontSize="14" LineBreakMode="TailTruncation" MaxLines="3"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2" Padding="10,0" Spacing="10" HorizontalOptions="Center" VerticalOptions="End">
+            <Button Text="Clear Results" BackgroundColor="#d32f2f" TextColor="White" CornerRadius="25" WidthRequest="200" Clicked="ClearResults_Clicked" />
+        </VerticalStackLayout>
+
+    </Grid>
 
 </ContentPage>
