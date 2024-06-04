@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TextRecognizer.MainPage"
+             BackgroundColor="#1e1e1e"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25"
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand">
+
+            <Label
+                Text="Welcome to Text Recognizer"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="White"
+                HorizontalOptions="Center"
+                Margin="0,30,0,0" />
+
+            <Label
+                Text="Recognize text from images easily"
+                FontSize="18"
+                TextColor="LightGray"
+                HorizontalOptions="Center"
+                Margin="0,0,0,20" />
+
+            <Frame
+                CornerRadius="20"
+                HasShadow="True"
+                BackgroundColor="#333333"
+                Padding="20"
+                HorizontalOptions="Center">
+
+                <VerticalStackLayout
+                    Spacing="15"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                    <Button
+                        x:Name="CounterBtn"
+                        Text="Pick Image" 
+                        BackgroundColor="#BB86FC"
+                        TextColor="White"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        WidthRequest="200"
+                        HorizontalOptions="Center"
+                        SemanticProperties.Hint="Picks an image for OCR"
+                        Clicked="OnCounterClicked" />
+
+                    <Button
+                        x:Name="PictureBtn"
+                        Text="Take Picture" 
+                        BackgroundColor="#BB86FC"
+                        TextColor="White"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        WidthRequest="200"
+                        HorizontalOptions="Center"
+                        SemanticProperties.Hint="Takes a picture for OCR"
+                        Clicked="PictureBtn_Clicked" />
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
