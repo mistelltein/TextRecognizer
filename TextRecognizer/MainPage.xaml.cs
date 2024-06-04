@@ -13,7 +13,14 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
 
-        await OcrPlugin.Default.InitAsync();
+        try
+        {
+            await OcrPlugin.Default.InitAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Initialization Error", ex.Message, "OK");
+        }
     }
 
     private async void OnCounterClicked(object sender, EventArgs e)
