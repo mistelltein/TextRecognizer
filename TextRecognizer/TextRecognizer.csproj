@@ -64,6 +64,8 @@
 	  <None Remove="Resources\Images\mainimage2.jpg" />
 	  <None Remove="Resources\Images\mainimage3.jpg" />
 	  <None Remove="Resources\Images\result_icon.png" />
+	  <None Remove="Resources\Images\save_img.png" />
+	  <None Remove="Resources\Images\scan_img.png" />
 	</ItemGroup>
 
 	<ItemGroup>
