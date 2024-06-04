@@ -1,6 +1,6 @@
 ﻿using Plugin.Maui.OCR;
 
-namespace TextRecognizer;
+namespace TextRecognizer.Views;
 
 public partial class MainPage : ContentPage
 {

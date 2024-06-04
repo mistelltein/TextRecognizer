@@ -59,6 +59,11 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\mainicon.jpg" />
+	  <None Remove="Resources\Images\home_icon.png" />
+	  <None Remove="Resources\Images\mainimage.jpg" />
+	  <None Remove="Resources\Images\mainimage2.jpg" />
+	  <None Remove="Resources\Images\mainimage3.jpg" />
+	  <None Remove="Resources\Images\result_icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,6 +71,12 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Plugin.Maui.OCR" Version="1.0.11" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\ScanResPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

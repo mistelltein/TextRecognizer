@@ -4,12 +4,26 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TextRecognizer"
+    xmlns:views="clr-namespace:TextRecognizer.Views"
     Shell.FlyoutBehavior="Disabled"
-    Title="TextRecognizer">
+    Shell.NavBarIsVisible="False">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.Resources>
+        <Style TargetType="TabBar">
+            <Setter Property="Shell.TabBarBackgroundColor" Value="#1a237e" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="#FFFFFF" />
+            <Setter Property="Shell.TabBarTitleColor" Value="#FFFFFF" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="#B0BEC5" />
+        </Style>
+    </Shell.Resources>
+
+    <TabBar>
+        <Tab Title="Home" Icon="home_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+        </Tab>
+        <Tab Title="Result" Icon="result_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ScanResPage}" />
+        </Tab>
+    </TabBar>
 
 </Shell>
