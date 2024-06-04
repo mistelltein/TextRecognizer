@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Plugin.Maui.OCR;
 using TextRecognizer.Services;
+using TextRecognizer.Views;
 
 namespace TextRecognizer;
 
@@ -24,6 +25,11 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<IOcrService>(OcrPlugin.Default);
         builder.Services.AddSingleton<IOcrResultService, OcrResultService>();
+
+        builder.Services.AddTransient<App>();
+        builder.Services.AddTransient<AppShell>();
+        builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<ScanResPage>();
 
         return builder.Build();
     }

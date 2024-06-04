@@ -4,14 +4,19 @@
              x:Class="TextRecognizer.Views.ScanResPage"
              BackgroundColor="#1e1e1e"
              BackgroundImageSource="background2.jpg">
-    
-    <VerticalStackLayout>
-        
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        
-    </VerticalStackLayout>
-    
+
+    <StackLayout Padding="10" Spacing="10">
+        <Label Text="Saved OCR Results" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+
+        <CollectionView x:Name="ResultsCollectionView" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="5" BackgroundColor="#424242" CornerRadius="10" WidthRequest="350" HeightRequest="100">
+                        <Label Text="{Binding DisplayText}" TextColor="White" FontSize="14" LineBreakMode="TailTruncation" MaxLines="3"/>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
 </ContentPage>

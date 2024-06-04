@@ -7,10 +7,10 @@ public partial class MainPage : ContentPage
 {
     private readonly IOcrResultService _ocrResultService;
 
-    public MainPage()
+    public MainPage(IOcrResultService ocrResultService)
     {
         InitializeComponent();
-        _ocrResultService = new OcrResultService();
+        _ocrResultService = ocrResultService;
     }
 
     protected async override void OnAppearing()
@@ -58,7 +58,7 @@ public partial class MainPage : ContentPage
                 }
 
                 await _ocrResultService.SaveResultAsync(ocrResult.AllText);
-                await DisplayAlert("OCR Result", ocrResult.AllText, "OK");
+                await DisplayAlert("OCR Result", "The text was successfully scanned. Please check the results page", "OK");
             }
         }
         catch (Exception ex)

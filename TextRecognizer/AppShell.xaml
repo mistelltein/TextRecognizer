@@ -21,7 +21,7 @@
         <Tab Title="Home" Icon="home_icon.png">
             <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>
-        <Tab Title="Result" Icon="result_icon.png">
+        <Tab Title="Results" Icon="result_icon.png">
             <ShellContent ContentTemplate="{DataTemplate views:ScanResPage}" />
         </Tab>
     </TabBar>
