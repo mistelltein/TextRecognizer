@@ -23,7 +23,7 @@ public partial class ScanResPage : ContentPage
 
     private string GetDisplayText(string text)
     {
-        const int maxLength = 50; // Show only the first 50 characters
+        const int maxLength = 100; // Show only the first 100 characters
         return text.Length <= maxLength ? text : text.Substring(0, maxLength) + "...";
     }
 
@@ -32,7 +32,7 @@ public partial class ScanResPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is DisplayResult selectedResult)
         {
             Clipboard.SetTextAsync(selectedResult.FullText);
-            DisplayAlert("Copied", "Text copied to clipboard.", "OK");
+            //DisplayAlert("Copied", "Text copied to clipboard.", "OK");
         }
     }
 
