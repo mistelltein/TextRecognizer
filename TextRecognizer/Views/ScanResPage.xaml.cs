@@ -35,7 +35,18 @@ public partial class ScanResPage : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is DisplayResult selectedResult)
         {
-            await Clipboard.SetTextAsync(selectedResult.FullText);
+            if (DeviceInfo.Platform == DevicePlatform.Android)
+            {
+#if ANDROID
+                var clipboardManager = (Android.Content.ClipboardManager)Android.App.Application.Context.GetSystemService(Android.Content.Context.ClipboardService);
+                var clipData = Android.Content.ClipData.NewPlainText("Скопированный текст", selectedResult.FullText);
+                clipboardManager.PrimaryClip = clipData;
+#endif
+            }
+            else
+            {
+                await Clipboard.SetTextAsync(selectedResult.FullText);
+            }
             await DisplayAlert("Copied", "Text copied to clipboard.", "OK");
 
             await Task.Delay(300);
