@@ -1,4 +1,5 @@
 ﻿using Plugin.Maui.OCR;
+using TesseractOcrMaui;
 using TextRecognizer.Services;
 
 namespace TextRecognizer.Views;
@@ -6,11 +7,13 @@ namespace TextRecognizer.Views;
 public partial class MainPage : ContentPage
 {
     private readonly IOcrResultService _ocrResultService;
+    private readonly ITesseract _tesseract;
 
-    public MainPage(IOcrResultService ocrResultService)
+    public MainPage(IOcrResultService ocrResultService, ITesseract tesseract)
     {
         InitializeComponent();
         _ocrResultService = ocrResultService;
+        _tesseract = tesseract;
     }
 
     protected async override void OnAppearing()
@@ -45,19 +48,9 @@ public partial class MainPage : ContentPage
 
             if (pickResult != null)
             {
-                using var imageAsStream = await pickResult.OpenReadAsync();
-                var imageAsBytes = new byte[imageAsStream.Length];
-                await imageAsStream.ReadAsync(imageAsBytes);
+                var result = await _tesseract.RecognizeTextAsync(pickResult.FullPath);
 
-                var ocrResult = await OcrPlugin.Default.RecognizeTextAsync(imageAsBytes);
-
-                if (!ocrResult.Success)
-                {
-                    await DisplayAlert("No success", "No OCR possible", "OK");
-                    return;
-                }
-
-                await _ocrResultService.SaveResultAsync(ocrResult.AllText);
+                await _ocrResultService.SaveResultAsync(result.RecognisedText);
                 await DisplayAlert("OCR Result", "The text was successfully scanned. Please check the results page", "OK");
             }
         }

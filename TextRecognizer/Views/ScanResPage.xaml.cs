@@ -7,8 +7,8 @@ public partial class ScanResPage : ContentPage
     private readonly IOcrResultService _ocrResultService;
 
     public ScanResPage(IOcrResultService ocrResultService)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _ocrResultService = ocrResultService;
     }
 
@@ -35,19 +35,18 @@ public partial class ScanResPage : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is DisplayResult selectedResult)
         {
-            if (DeviceInfo.Platform == DevicePlatform.Android)
+            try
             {
-#if ANDROID
-                var clipboardManager = (Android.Content.ClipboardManager)Android.App.Application.Context.GetSystemService(Android.Content.Context.ClipboardService);
-                var clipData = Android.Content.ClipData.NewPlainText("Скопированный текст", selectedResult.FullText);
-                clipboardManager.PrimaryClip = clipData;
-#endif
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Clipboard.Default.SetTextAsync(selectedResult.FullText);
+                });
+                await DisplayAlert("Copied", "Text copied to clipboard.", "OK");
             }
-            else
+            catch (Exception ex)
             {
-                await Clipboard.SetTextAsync(selectedResult.FullText);
+                await DisplayAlert("Error", $"Clipboard error: {ex.Message}", "OK");
             }
-            await DisplayAlert("Copied", "Text copied to clipboard.", "OK");
 
             await Task.Delay(300);
             ((CollectionView)sender).SelectedItem = null;
