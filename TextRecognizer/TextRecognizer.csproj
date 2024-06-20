@@ -75,6 +75,8 @@
 	  <None Remove="Resources\Images\paste.png" />
 	  <None Remove="Resources\Images\save_img.png" />
 	  <None Remove="Resources\Images\scan_img.png" />
+	  <None Remove="Resources\Raw\eng.traineddata" />
+	  <None Remove="Resources\Raw\rus.traineddata" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -83,6 +85,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Plugin.Maui.OCR" Version="1.0.11" />
 		<PackageReference Include="Tesseract.Net.SDK" Version="4.6.411" />
+		<PackageReference Include="TesseractOcrMaui" Version="1.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>

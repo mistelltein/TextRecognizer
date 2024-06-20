@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Plugin.Maui.OCR;
+using TesseractOcrMaui;
 using TextRecognizer.Services;
 using TextRecognizer.Views;
 
@@ -22,6 +23,14 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+        builder.Services.AddLogging();
+        builder.Services.AddTesseractOcr(
+            files =>
+            {
+                // must have matching files in Resources/Raw folder
+                files.AddFile("eng.traineddata");
+                files.AddFile("rus.traineddata");
+            });
 
         builder.Services.AddSingleton<IOcrService>(OcrPlugin.Default);
         builder.Services.AddSingleton<IOcrResultService, OcrResultService>();
