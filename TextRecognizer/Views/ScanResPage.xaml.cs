@@ -5,6 +5,7 @@ namespace TextRecognizer.Views;
 public partial class ScanResPage : ContentPage
 {
     private readonly IOcrResultService _ocrResultService;
+    private bool _isResultsLoading = false;
 
     public ScanResPage(IOcrResultService ocrResultService)
     {
@@ -15,14 +16,27 @@ public partial class ScanResPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await LoadResultsAsync();
+        if (!_isResultsLoading)
+        {
+            _isResultsLoading = true;
+            await LoadResultsAsync();
+            _isResultsLoading = false;
+        }
     }
 
     private async Task LoadResultsAsync()
     {
-        var results = await _ocrResultService.GetResultsAsync();
-        var displayResults = results.Select(text => new DisplayResult { FullText = text, DisplayText = GetDisplayText(text) }).ToList();
-        ResultsCollectionView.ItemsSource = displayResults;
+        try
+        {
+            var results = await _ocrResultService.GetResultsAsync();
+            var displayResults = results.Select(text => new DisplayResult { FullText = text, DisplayText = GetDisplayText(text) }).ToList();
+            ResultsListView.ItemsSource = displayResults;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading results: {ex.Message}");
+            await DisplayAlert("Error", $"Error loading results: {ex.Message}", "OK");
+        }
     }
 
     private string GetDisplayText(string text)
@@ -31,21 +45,34 @@ public partial class ScanResPage : ContentPage
         return text.Length <= maxLength ? text : text.Substring(0, maxLength) + "...";
     }
 
-    private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void OnSelectionChanged(object sender, SelectedItemChangedEventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is DisplayResult selectedResult)
+        if (e.SelectedItem is DisplayResult selectedResult)
         {
-            try
+            Console.WriteLine($"Selected result: {selectedResult.FullText}");
+            if (selectedResult.FullText != null)
             {
-                await CopyAsync(selectedResult.FullText!);
+                try
+                {
+                    await CopyAsync(selectedResult.FullText);
+                    Console.WriteLine("Text copied successfully");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error in OnSelectionChanged: {ex}");
+                    await DisplayAlert("Error", $"Clipboard error: {ex.Message}", "OK");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                await DisplayAlert("Error", $"Clipboard error: {ex.Message}", "OK");
+                Console.WriteLine("Selected result FullText is null");
             }
-
             await Task.Delay(300);
-            ((CollectionView)sender).SelectedItem = null;
+            ResultsListView.SelectedItem = null;
+        }
+        else
+        {
+            Console.WriteLine("No item selected");
         }
     }
 
@@ -55,23 +82,38 @@ public partial class ScanResPage : ContentPage
         {
             try
             {
-                await MainThread.InvokeOnMainThreadAsync(() =>
+                Console.WriteLine("Copying text to clipboard");
+                await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
-                    Clipboard.Default.SetTextAsync(text);
+                    await Clipboard.Default.SetTextAsync(text);
                 });
+                Console.WriteLine("Text copied to clipboard successfully");
                 await DisplayAlert("Copied", "Text copied to clipboard!", "OK");
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Failed to copy text: {ex.Message}");
                 await DisplayAlert("Error", $"Failed to copy text: {ex.Message}", "OK");
             }
+        }
+        else
+        {
+            Console.WriteLine("Text is empty, nothing to copy");
         }
     }
 
     private async void ClearResults_Clicked(object sender, EventArgs e)
     {
-        await _ocrResultService.ClearResultsAsync();
-        await LoadResultsAsync();
+        try
+        {
+            await _ocrResultService.ClearResultsAsync();
+            await LoadResultsAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error clearing results: {ex.Message}");
+            await DisplayAlert("Error", $"Error clearing results: {ex.Message}", "OK");
+        }
     }
 
     public class DisplayResult
