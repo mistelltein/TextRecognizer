@@ -24,6 +24,12 @@ public partial class ScanResPage : ContentPage
         }
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        ResultsListView.ItemSelected -= OnSelectionChanged;
+    }
+
     private async Task LoadResultsAsync()
     {
         try

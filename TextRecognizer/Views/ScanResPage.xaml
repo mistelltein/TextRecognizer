@@ -12,19 +12,19 @@
 
         <ScrollView Grid.Row="1" Padding="30,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <VerticalStackLayout Spacing="20" HorizontalOptions="Center" VerticalOptions="StartAndExpand">
-
                 <ListView x:Name="ResultsListView" SelectionMode="Single" ItemSelected="OnSelectionChanged" HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Frame Padding="15" Margin="10" BackgroundColor="#3949ab" CornerRadius="20" HasShadow="True">
-                                    <Label Text="{Binding DisplayText}" TextColor="White" FontSize="16" LineBreakMode="TailTruncation" MaxLines="3"/>
-                                </Frame>
+                                <Grid>
+                                    <Frame Padding="15" Margin="10" BackgroundColor="#3949ab" CornerRadius="20" HasShadow="True">
+                                        <Label Text="{Binding DisplayText}" TextColor="White" FontSize="16" LineBreakMode="TailTruncation" MaxLines="3"/>
+                                    </Frame>
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
             </VerticalStackLayout>
         </ScrollView>
 
