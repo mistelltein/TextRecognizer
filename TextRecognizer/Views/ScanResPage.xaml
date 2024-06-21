@@ -7,7 +7,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
 
         <VerticalStackLayout Grid.Row="0" Padding="30,0" Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-            <Label Text="Saved OCR Results" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Margin="0,30,0,10" />
+            <Label Text="Made in Beka" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Margin="0,30,0,10" />
         </VerticalStackLayout>
 
         <ScrollView Grid.Row="1" Padding="30,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
