@@ -1,3 +1,4 @@
+using System;
 using TextRecognizer.Services;
 
 namespace TextRecognizer.Views;
@@ -53,7 +54,10 @@ public partial class ScanResPage : ContentPage
     {
         if (!string.IsNullOrEmpty(text))
         {
-            await Microsoft.Maui.ApplicationModel.DataTransfer.Clipboard.SetTextAsync(text);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Clipboard.Default.SetTextAsync(text);
+            });
             await DisplayAlert("Copied", "Text copied to clipboard!", "OK");
         }
     }
