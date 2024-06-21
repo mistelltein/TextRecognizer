@@ -37,11 +37,7 @@ public partial class ScanResPage : ContentPage
         {
             try
             {
-                MainThread.BeginInvokeOnMainThread(async () =>
-                {
-                    await Clipboard.Default.SetTextAsync(selectedResult.FullText);
-                });
-                await DisplayAlert("Copied", "Text copied to clipboard.", "OK");
+                await CopyAsync(selectedResult.FullText!);
             }
             catch (Exception ex)
             {
@@ -52,6 +48,16 @@ public partial class ScanResPage : ContentPage
             ((CollectionView)sender).SelectedItem = null;
         }
     }
+
+    public async Task CopyAsync(string text)
+    {
+        if (!string.IsNullOrEmpty(text))
+        {
+            await Microsoft.Maui.ApplicationModel.DataTransfer.Clipboard.SetTextAsync(text);
+            await DisplayAlert("Copied", "Text copied to clipboard!", "OK");
+        }
+    }
+
 
     private async void ClearResults_Clicked(object sender, EventArgs e)
     {
