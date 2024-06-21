@@ -1,4 +1,3 @@
-using System;
 using TextRecognizer.Services;
 
 namespace TextRecognizer.Views;
@@ -54,14 +53,20 @@ public partial class ScanResPage : ContentPage
     {
         if (!string.IsNullOrEmpty(text))
         {
-            MainThread.BeginInvokeOnMainThread(() =>
+            try
             {
-                Clipboard.Default.SetTextAsync(text);
-            });
-            await DisplayAlert("Copied", "Text copied to clipboard!", "OK");
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    Clipboard.Default.SetTextAsync(text);
+                });
+                await DisplayAlert("Copied", "Text copied to clipboard!", "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Failed to copy text: {ex.Message}", "OK");
+            }
         }
     }
-
 
     private async void ClearResults_Clicked(object sender, EventArgs e)
     {
